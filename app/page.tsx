@@ -12,38 +12,38 @@ export default function HomePage() {
     <>
       {/* 1 — HERO (PRD §5.1): name, photo, one-line positioning, the hook */}
       <section className="relative overflow-hidden">
-        <Container className="grid items-center gap-12 py-20 sm:py-28 lg:grid-cols-[1.2fr_1fr]">
-          <Reveal>
-            <p className="mb-5 text-sm font-medium uppercase tracking-[0.18em] text-accent">
+        <Container className="grid items-center gap-10 py-14 sm:py-24 lg:grid-cols-[1.2fr_1fr]">
+          <Reveal className="order-2 lg:order-1">
+            <p className="mb-4 text-xs font-medium uppercase tracking-[0.18em] text-accent sm:mb-5 sm:text-sm">
               PLACEHOLDER — AI Builder
             </p>
-            <h1 className="text-balance text-5xl font-semibold tracking-tight text-ink sm:text-6xl">
+            <h1 className="text-balance text-4xl font-semibold tracking-tight text-ink sm:text-6xl">
               {site.name}
             </h1>
-            <p className="mt-6 max-w-xl text-xl leading-relaxed text-ink/80">
+            <p className="mt-5 max-w-xl text-lg leading-relaxed text-ink/80 sm:mt-6 sm:text-xl">
               {site.positioning}
             </p>
-            <p className="mt-4 max-w-xl text-lg leading-relaxed text-muted">
+            <p className="mt-3 max-w-xl text-base leading-relaxed text-muted sm:mt-4 sm:text-lg">
               {site.hook}
             </p>
-            <div className="mt-9 flex flex-wrap gap-3">
+            <div className="mt-8 flex flex-col gap-3 sm:mt-9 sm:flex-row sm:flex-wrap">
               <Link
                 href="#apps"
-                className="rounded-full bg-ink px-6 py-3 text-sm font-medium text-paper transition-opacity hover:opacity-90"
+                className="rounded-full bg-ink px-6 py-3 text-center text-sm font-medium text-paper transition-opacity hover:opacity-90"
               >
                 See the apps
               </Link>
               <Link
                 href="#contact"
-                className="rounded-full border border-hairline px-6 py-3 text-sm font-medium text-ink transition-colors hover:bg-ink/5"
+                className="rounded-full border border-hairline px-6 py-3 text-center text-sm font-medium text-ink transition-colors hover:bg-ink/5"
               >
                 Get in touch
               </Link>
             </div>
           </Reveal>
 
-          <Reveal delay={120}>
-            <div className="mx-auto aspect-[4/5] w-full max-w-xs overflow-hidden rounded-xl2 border border-hairline bg-surface shadow-sm">
+          <Reveal delay={120} className="order-1 lg:order-2">
+            <div className="mx-auto aspect-[4/5] w-full max-w-[15rem] overflow-hidden rounded-xl2 border border-hairline bg-surface shadow-sm sm:max-w-xs">
               <PlaceholderImage
                 label={site.heroPhoto.alt}
                 src={site.heroPhoto.src}
@@ -54,7 +54,7 @@ export default function HomePage() {
       </section>
 
       {/* 2 — THE ARC (PRD §5.2): poker → AI operator */}
-      <section id="arc" className="border-t border-hairline bg-surface py-20 sm:py-28">
+      <section id="arc" className="border-t border-hairline bg-surface py-16 sm:py-28">
         <Container>
           <Reveal>
             <SectionHeading eyebrow="The arc" title="Poker → AI operator." />
@@ -70,7 +70,7 @@ export default function HomePage() {
       </section>
 
       {/* 3 — APP GRID (PRD §5.3): six cards */}
-      <section id="apps" className="py-20 sm:py-28">
+      <section id="apps" className="py-16 sm:py-28">
         <Container>
           <Reveal>
             <SectionHeading eyebrow="The work" title="Six apps. Built and shipped.">
@@ -89,7 +89,7 @@ export default function HomePage() {
       </section>
 
       {/* 4 — HOW I BUILD (PRD §5.5): the meta-skill */}
-      <section id="build" className="border-t border-hairline bg-surface py-20 sm:py-28">
+      <section id="build" className="border-t border-hairline bg-surface py-16 sm:py-28">
         <Container>
           <Reveal>
             <SectionHeading eyebrow="How I build" title="The meta-skill.">
@@ -117,7 +117,7 @@ export default function HomePage() {
       </section>
 
       {/* 5 — CONTACT (PRD §5.6 / §10): one low-pressure action */}
-      <section id="contact" className="py-20 sm:py-28">
+      <section id="contact" className="py-16 sm:py-28">
         <Container>
           <Reveal>
             <div className="mx-auto max-w-2xl text-center">

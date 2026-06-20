@@ -25,13 +25,13 @@ export default function AppDetail({ app }: { app: App }) {
         {/* header: name + one-liner + status */}
         <Reveal>
           <header className="mt-8 max-w-2xl">
-            <div className="flex flex-wrap items-center gap-4">
-              <h1 className="text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
+            <div className="flex flex-wrap items-center gap-3 sm:gap-4">
+              <h1 className="text-3xl font-semibold tracking-tight text-ink sm:text-5xl">
                 {app.name}
               </h1>
               <StatusTag status={app.statusTag} />
             </div>
-            <p className="mt-4 text-xl leading-relaxed text-muted">
+            <p className="mt-4 text-lg leading-relaxed text-muted sm:text-xl">
               {app.oneLiner}
             </p>
           </header>
@@ -39,7 +39,7 @@ export default function AppDetail({ app }: { app: App }) {
 
         {/* hero shot in the device frame */}
         <Reveal delay={100}>
-          <div className="mt-12 grid items-center gap-10 rounded-xl2 border border-hairline bg-surface p-8 sm:p-12 lg:grid-cols-2">
+          <div className="mt-10 grid items-center gap-8 rounded-xl2 border border-hairline bg-surface p-5 sm:gap-10 sm:p-12 lg:grid-cols-2">
             <Visual visual={app.heroImage} showCaption={false} />
             <div className="space-y-8">
               {/* The itch */}
