@@ -155,35 +155,40 @@ export const apps: App[] = [
       caption:
         "15+ games in one app, filtered by vibe — in a premium glass design system.",
       aspect: "phone",
+      real: true,
     },
     supportingImages: [
       {
         src: "/screenshots/partyspark/roast-me.png",
-        alt: "PartySpark Roast Me — photo turned into an AI roast and caricature",
+        alt: "PartySpark Roast Me — pick a sticker, drop a photo for an AI roast",
         caption:
-          "Upload a photo, get an AI-generated roast and caricature — the signature party moment.",
+          "Pick a sticker, drop a photo, and AI roasts you with a custom caricature — the signature party moment.",
         aspect: "phone",
+        real: true,
       },
       {
         src: "/screenshots/partyspark/create-your-vibe.png",
-        alt: "PartySpark Create Your Vibe — custom deck generation flow",
+        alt: "PartySpark Most Likely To… deck picker with an AI 'Create Your Vibe' option",
         caption:
-          "Type a vibe and AI spins up a custom question pack live — with bundled decks as fallback.",
+          "Pick a vibe — or let AI spin up a custom 'Create Your Vibe' pack — with bundled decks as fallback.",
         aspect: "phone",
+        real: true,
       },
       {
         src: "/screenshots/partyspark/in-play-card.png",
-        alt: "PartySpark in-play card with swipe buttons and a live leaderboard",
+        alt: "PartySpark Taboo in play — word, forbidden list, timer and skip/correct",
         caption:
-          "Tinder-style swipe play and live leaderboards, in one consistent design system.",
+          "Taboo in play: describe the word without the forbidden five, against the clock — one consistent design system across every game.",
         aspect: "phone",
+        real: true,
       },
       {
         src: "/screenshots/partyspark/scramble.png",
-        alt: "PartySpark Scramble — solo word game with tiles, timer and end screen",
+        alt: "PartySpark Scramble — solo word game with letter tiles, timer and score",
         caption:
           "Scramble: a clean solo word game with a live timer and end-of-round scoring.",
         aspect: "phone",
+        real: true,
       },
     ],
   },
