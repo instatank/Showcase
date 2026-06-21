@@ -54,12 +54,12 @@ export default function AppCard({ app }: { app: App }) {
                 preview that floats above the rest of the page. pointer-events-none
                 so a click still navigates through to the detail page. */}
             <div
-              className="pointer-events-none absolute inset-0 z-40 flex items-center justify-center"
+              className="pointer-events-none absolute inset-0 z-40 flex items-center justify-start"
               aria-hidden
             >
               <div
-                className="flex shrink-0 translate-y-4 scale-95 items-center justify-center gap-5 rounded-3xl border border-white/60 bg-white/65 p-6 opacity-0 shadow-[0_60px_140px_-40px_rgba(27,26,24,0.7)] backdrop-blur-xl transition-all duration-500 ease-out group-hover/shots:translate-y-0 group-hover/shots:scale-100 group-hover/shots:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:scale-100 group-focus-visible:opacity-100"
-                style={{ width: "min(95vw, 880px)" }}
+                className="ml-8 flex shrink-0 translate-y-4 scale-95 items-center justify-center gap-5 rounded-3xl border border-white/60 bg-white/65 p-6 opacity-0 shadow-[0_60px_140px_-40px_rgba(27,26,24,0.7)] backdrop-blur-xl transition-all duration-500 ease-out group-hover/shots:translate-y-0 group-hover/shots:scale-100 group-hover/shots:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:scale-100 group-focus-visible:opacity-100 sm:ml-12"
+                style={{ width: "min(90vw, 820px)" }}
               >
                 {/* soft accent glow behind the deck */}
                 <div className="pointer-events-none absolute inset-6 -z-10 rounded-full bg-gradient-to-tr from-accent/15 via-transparent to-violet-400/15 blur-3xl" />
