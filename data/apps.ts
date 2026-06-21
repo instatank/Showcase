@@ -175,10 +175,10 @@ export const apps: App[] = [
         real: true,
       },
       {
-        src: "/screenshots/partyspark/in-play-card.png",
-        alt: "PartySpark Taboo in play — word, forbidden list, timer and skip/correct",
+        src: "/screenshots/partyspark/mlt-play.png",
+        alt: "PartySpark Most Likely To… in play — prompt card with a 3-2-1 group vote",
         caption:
-          "Taboo in play: describe the word without the forbidden five, against the clock — one consistent design system across every game.",
+          "…and into the round: read the prompt, then everyone points on a 3-2-1 vote.",
         aspect: "phone",
         real: true,
       },
@@ -187,6 +187,22 @@ export const apps: App[] = [
         alt: "PartySpark Scramble — solo word game with letter tiles, timer and score",
         caption:
           "Scramble: a clean solo word game with a live timer and end-of-round scoring.",
+        aspect: "phone",
+        real: true,
+      },
+      {
+        src: "/screenshots/partyspark/in-play-card.png",
+        alt: "PartySpark Taboo in play — word, forbidden list, timer and skip/correct",
+        caption:
+          "Taboo in play: describe the word without the forbidden five, against the clock.",
+        aspect: "phone",
+        real: true,
+      },
+      {
+        src: "/screenshots/partyspark/nhie.png",
+        alt: "PartySpark Never Have I Ever — Classic Party card with I Have / I've Never",
+        caption:
+          "Never Have I Ever: two-tap play through the Classic Party deck — one consistent design system across every game.",
         aspect: "phone",
         real: true,
       },
