@@ -15,6 +15,15 @@ export default function AppCard({ app }: { app: App }) {
     ? [app.heroImage, ...app.supportingImages].slice(0, 3)
     : null;
 
+  // Per-shot motion for the hover "fan": outer shots spread out + tilt, the
+  // centre one lifts and scales up the most. Staggered so they cascade open.
+  const fan = [
+    "group-hover/shots:-translate-x-10 group-hover/shots:-rotate-[7deg] group-hover/shots:scale-100 group-focus-visible:-translate-x-10 group-focus-visible:-rotate-[7deg] group-focus-visible:scale-100",
+    "z-10 group-hover/shots:-translate-y-5 group-hover/shots:scale-110 group-focus-visible:-translate-y-5 group-focus-visible:scale-110",
+    "group-hover/shots:translate-x-10 group-hover/shots:rotate-[7deg] group-hover/shots:scale-100 group-focus-visible:translate-x-10 group-focus-visible:rotate-[7deg] group-focus-visible:scale-100",
+  ];
+  const fanDelay = ["delay-0", "delay-100", "delay-200"];
+
   return (
     <Link
       href={`/apps/${app.slug}`}
@@ -41,28 +50,34 @@ export default function AppCard({ app }: { app: App }) {
                 </div>
               ))}
             </div>
-            {/* Hover state: the three shots zoom up into an expanded preview that
-                floats above the card. pointer-events-none so a click still
-                navigates through to the detail page. */}
+            {/* Hover state: the three shots fan out into a large expanded
+                preview that floats above the rest of the page. pointer-events-none
+                so a click still navigates through to the detail page. */}
             <div
-              className="pointer-events-none absolute left-1/2 top-1/2 z-40 flex -translate-x-1/2 -translate-y-1/2 scale-90 items-center justify-center gap-3 rounded-2xl border border-hairline bg-white/80 p-4 opacity-0 shadow-[0_40px_80px_-24px_rgba(27,26,24,0.5)] backdrop-blur-md transition-all duration-300 ease-out group-hover/shots:scale-100 group-hover/shots:opacity-100 group-focus-visible:scale-100 group-focus-visible:opacity-100"
-              style={{ width: "min(82vw, 460px)" }}
+              className="pointer-events-none absolute inset-0 z-40 flex items-center justify-center"
               aria-hidden
             >
-              {gallery.map((visual) => (
-                <div
-                  key={visual.src}
-                  className="relative aspect-[9/19.5] w-1/3 overflow-hidden rounded-xl border border-hairline bg-surface shadow-lg ring-1 ring-black/5"
-                >
-                  <Image
-                    src={visual.src}
-                    alt={visual.alt}
-                    fill
-                    sizes="160px"
-                    className="object-cover object-top"
-                  />
-                </div>
-              ))}
+              <div
+                className="flex shrink-0 translate-y-4 scale-95 items-center justify-center gap-5 rounded-3xl border border-white/60 bg-white/65 p-6 opacity-0 shadow-[0_60px_140px_-40px_rgba(27,26,24,0.7)] backdrop-blur-xl transition-all duration-500 ease-out group-hover/shots:translate-y-0 group-hover/shots:scale-100 group-hover/shots:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:scale-100 group-focus-visible:opacity-100"
+                style={{ width: "min(95vw, 880px)" }}
+              >
+                {/* soft accent glow behind the deck */}
+                <div className="pointer-events-none absolute inset-6 -z-10 rounded-full bg-gradient-to-tr from-accent/15 via-transparent to-violet-400/15 blur-3xl" />
+                {gallery.map((visual, i) => (
+                  <div
+                    key={visual.src}
+                    className={`relative aspect-[9/19.5] w-1/3 scale-75 overflow-hidden rounded-2xl border border-hairline bg-surface opacity-0 shadow-2xl ring-1 ring-black/5 transition-all duration-500 ease-out ${fan[i]} ${fanDelay[i]}`}
+                  >
+                    <Image
+                      src={visual.src}
+                      alt={visual.alt}
+                      fill
+                      sizes="280px"
+                      className="object-cover object-top"
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
           </>
         ) : (
