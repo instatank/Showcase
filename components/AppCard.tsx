@@ -9,20 +9,36 @@ import StatusTag from "./StatusTag";
  * status tag. App Store-inspired, not a clone. Links to the detail page.
  */
 export default function AppCard({ app }: { app: App }) {
+  // For apps with real screenshots, preview 3 of them as mini phones in the
+  // card; the click-through goes to the full detail page anyway.
+  const gallery = app.heroImage.real
+    ? [app.heroImage, ...app.supportingImages].slice(0, 3)
+    : null;
+
   return (
     <Link
       href={`/apps/${app.slug}`}
       className="group flex flex-col overflow-hidden rounded-xl2 border border-hairline bg-surface transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_40px_-24px_rgba(27,26,24,0.35)] focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/40"
     >
       <div className="relative aspect-[4/3] overflow-hidden border-b border-hairline">
-        {app.heroImage.real ? (
-          <Image
-            src={app.heroImage.src}
-            alt={app.heroImage.alt}
-            fill
-            sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 360px"
-            className="object-cover object-top"
-          />
+        {gallery ? (
+          <div className="absolute inset-0 flex items-center justify-center gap-2.5 bg-gradient-to-br from-stone-50 to-stone-100 p-4 sm:gap-3">
+            {gallery.map((visual) => (
+              <div
+                key={visual.src}
+                className="relative h-[90%] overflow-hidden rounded-lg border border-hairline bg-surface shadow-md ring-1 ring-black/5"
+                style={{ aspectRatio: "9 / 19.5" }}
+              >
+                <Image
+                  src={visual.src}
+                  alt={visual.alt}
+                  fill
+                  sizes="120px"
+                  className="object-cover object-top"
+                />
+              </div>
+            ))}
+          </div>
         ) : (
           <PlaceholderImage label={`${app.name} hero`} src={app.heroImage.src} />
         )}
