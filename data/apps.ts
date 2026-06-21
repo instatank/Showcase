@@ -13,6 +13,7 @@
 export type StatusTag =
   | "Daily driver"
   | "Shipped"
+  | "Shipped · actively maintained"
   | "In progress"
   | "Prototype";
 
@@ -23,9 +24,11 @@ export type VisualAspect = "phone" | "wide" | "square";
  * How a visitor can experience the app from its detail page.
  * - "screenshots": images only — no live link, no demo button (e.g. a
  *   login-gated app holding personal data).
+ * - "screenshots-demo": screenshots now, demo-capable — no public URL wired yet
+ *   (badge reads "Screenshots / demo"). Switch to "live-demo" once a URL exists.
  * - "live-demo": render a live link / demo button (needs `liveUrl` on the App).
  */
-export type ExperienceMode = "screenshots" | "live-demo";
+export type ExperienceMode = "screenshots" | "screenshots-demo" | "live-demo";
 
 export interface Visual {
   /** Path where the real asset will live, e.g. /images/dayos/hero.png */
@@ -129,38 +132,60 @@ export const apps: App[] = [
   {
     slug: "partyspark",
     name: "PartySpark",
-    oneLiner: "PLACEHOLDER — Social party game app that gets a room going.",
+    // ⚠️ DRAFT PLACEHOLDER — one-liner to be confirmed in Ankit's own words.
+    oneLiner: "15+ party games in one app — offline-first, AI-spiced.",
+    // ⚠️ DRAFT PLACEHOLDER — the itch to be replaced in Ankit's own words.
     theItch:
-      "PLACEHOLDER — Confirm the real itch behind PartySpark.",
+      "Getting a group laughing and engaged — at a party, on the couch, in the car — usually means hunting for a game, signing up for something, or needing a connection that isn't there. I wanted one premium-feeling app that bundles the best party games, works offline, and uses AI to keep the content fresh when you want it.",
     features: [
-      "PLACEHOLDER — Feature one",
-      "PLACEHOLDER — Feature two",
-      "PLACEHOLDER — Feature three",
+      "15+ party games in one app — trivia, word games, social-deduction, couples and crowd games — most fully playable offline, no account needed.",
+      "AI generates custom content on demand (tailored question packs, photo-based roasts), and always falls back to bundled content, so a game never breaks on a failed network call.",
+      "Flexible play modes — pass-the-phone or named players with live leaderboards — plus a frictionless gate for mature decks.",
     ],
     howItWasBuilt:
-      "PLACEHOLDER — Built with [stack]. Note: PartySpark has its own full navy/violet + black/gold identity — the SHOWCASE deliberately does not reuse it (PRD §8).",
-    statusTag: "Shipped",
+      'Frontend: React 19 + TypeScript, built with Vite 7, styled with Tailwind v4 — a premium glassmorphism design system. Backend: Vercel serverless functions that keep all API keys server-side; the app talks to a single /api/ai endpoint. AI: Claude Haiku 4.5 as the primary generator, with Google Gemini 2.5 Flash as fallback for most text, and a Gemini image model powering the "Roast Me" caricatures.\n\nThe build decision worth showing: PartySpark is offline-first, with AI as optional spice — never a hard dependency. Every AI-backed game ships with a bundled static deck, so if the AI call fails the player still gets a full game. Custom-content requests try Claude first and silently fall back to Gemini if needed — the player never sees which AI answered, or that one failed. All keys live server-side in a Vercel function, never exposed in the app people use. The result feels smart when online and simply never breaks when it isn\'t.',
+    statusTag: "Shipped · actively maintained",
+    // "Screenshots / demo" for now — no-login, no personal data, so a live "Try it"
+    // link is a candidate later. Do not hardcode a URL until one is provided.
+    experienceMode: "screenshots-demo",
+    // NOTE: set `real: true` on each visual once the PNG exists at its src.
     heroImage: {
-      src: "/images/partyspark/hero.png",
-      alt: "PLACEHOLDER — PartySpark hero screenshot",
-      caption: "PLACEHOLDER — PartySpark lobby",
+      src: "/screenshots/partyspark/home-grid.png",
+      alt: "PartySpark home — glass-on-navy game grid with filter pills",
+      caption:
+        "15+ games in one app, filtered by vibe — in a premium glass design system.",
       aspect: "phone",
     },
     supportingImages: [
       {
-        src: "/images/partyspark/shot-1.png",
-        alt: "PLACEHOLDER — PartySpark supporting screenshot 1",
-        caption: "PLACEHOLDER — Game in progress",
+        src: "/screenshots/partyspark/roast-me.png",
+        alt: "PartySpark Roast Me — photo turned into an AI roast and caricature",
+        caption:
+          "Upload a photo, get an AI-generated roast and caricature — the signature party moment.",
         aspect: "phone",
       },
       {
-        src: "/images/partyspark/shot-2.png",
-        alt: "PLACEHOLDER — PartySpark supporting screenshot 2",
-        caption: "PLACEHOLDER — Round results",
+        src: "/screenshots/partyspark/create-your-vibe.png",
+        alt: "PartySpark Create Your Vibe — custom deck generation flow",
+        caption:
+          "Type a vibe and AI spins up a custom question pack live — with bundled decks as fallback.",
+        aspect: "phone",
+      },
+      {
+        src: "/screenshots/partyspark/in-play-card.png",
+        alt: "PartySpark in-play card with swipe buttons and a live leaderboard",
+        caption:
+          "Tinder-style swipe play and live leaderboards, in one consistent design system.",
+        aspect: "phone",
+      },
+      {
+        src: "/screenshots/partyspark/scramble.png",
+        alt: "PartySpark Scramble — solo word game with tiles, timer and end screen",
+        caption:
+          "Scramble: a clean solo word game with a live timer and end-of-round scoring.",
         aspect: "phone",
       },
     ],
-    clipUrl: "/images/partyspark/clip.mp4", // PLACEHOLDER — 15–20s screen-recording (PRD §7 minimum)
   },
   {
     slug: "billbud",

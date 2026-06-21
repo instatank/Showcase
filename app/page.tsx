@@ -81,7 +81,14 @@ export default function HomePage() {
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {apps.map((app, i) => (
               <Reveal key={app.slug} delay={(i % 3) * 80}>
-                <AppCard app={app} />
+                {/* Column position drives which way the hover preview expands
+                    (left col → right, right col → left, middle → centred). */}
+                <AppCard
+                  app={app}
+                  align={
+                    i % 3 === 0 ? "left" : i % 3 === 2 ? "right" : "center"
+                  }
+                />
               </Reveal>
             ))}
           </div>

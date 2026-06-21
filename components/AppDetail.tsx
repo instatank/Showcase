@@ -34,7 +34,8 @@ export default function AppDetail({ app }: { app: App }) {
             <p className="mt-4 text-lg leading-relaxed text-muted sm:text-xl">
               {app.oneLiner}
             </p>
-            {/* Experience mode: live-demo gets a button; screenshots-only gets a quiet note. */}
+            {/* Experience mode: live-demo gets a button; otherwise a quiet note
+                whose label reflects the mode. */}
             {app.experienceMode === "live-demo" && app.liveUrl ? (
               <a
                 href={app.liveUrl}
@@ -46,7 +47,9 @@ export default function AppDetail({ app }: { app: App }) {
               </a>
             ) : (
               <p className="mt-5 inline-flex items-center gap-2 rounded-full border border-hairline bg-surface px-3 py-1 text-xs font-medium uppercase tracking-wider text-muted">
-                Screenshots only
+                {app.experienceMode === "screenshots-demo"
+                  ? "Screenshots / demo"
+                  : "Screenshots only"}
               </p>
             )}
           </header>

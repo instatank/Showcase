@@ -7,13 +7,37 @@ import StatusTag from "./StatusTag";
 /**
  * AppCard — one cell in the App Grid (PRD §5.3): image, name, one-liner,
  * status tag. App Store-inspired, not a clone. Links to the detail page.
+ *
+ * `align` controls which way the hover preview expands so it never runs off
+ * the screen: left-column cards spread right, right-column cards spread left,
+ * centre cards stay symmetric. The grid passes this based on the card's column.
  */
-export default function AppCard({ app }: { app: App }) {
+export default function AppCard({
+  app,
+  align = "center",
+}: {
+  app: App;
+  align?: "left" | "center" | "right";
+}) {
   // For apps with real screenshots, preview 3 of them as mini phones in the
   // card; the click-through goes to the full detail page anyway.
   const gallery = app.heroImage.real
     ? [app.heroImage, ...app.supportingImages].slice(0, 3)
     : null;
+
+  // Anchor + nudge the expanded panel away from the nearest screen edge.
+  const panelJustify =
+    align === "left"
+      ? "justify-start"
+      : align === "right"
+        ? "justify-end"
+        : "justify-center";
+  const panelMargin =
+    align === "left"
+      ? "ml-8 sm:ml-12"
+      : align === "right"
+        ? "mr-8 sm:mr-12"
+        : "";
 
   // Per-shot motion for the hover "fan": outer shots spread out + tilt, the
   // centre one lifts and scales up the most. Staggered so they cascade open.
@@ -54,11 +78,11 @@ export default function AppCard({ app }: { app: App }) {
                 preview that floats above the rest of the page. pointer-events-none
                 so a click still navigates through to the detail page. */}
             <div
-              className="pointer-events-none absolute inset-0 z-40 flex items-center justify-start"
+              className={`pointer-events-none absolute inset-0 z-40 flex items-center ${panelJustify}`}
               aria-hidden
             >
               <div
-                className="ml-8 flex shrink-0 translate-y-4 scale-95 items-center justify-center gap-5 rounded-3xl border border-white/60 bg-white/65 p-6 opacity-0 shadow-[0_60px_140px_-40px_rgba(27,26,24,0.7)] backdrop-blur-xl transition-all duration-500 ease-out group-hover/shots:translate-y-0 group-hover/shots:scale-100 group-hover/shots:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:scale-100 group-focus-visible:opacity-100 sm:ml-12"
+                className={`${panelMargin} flex shrink-0 translate-y-4 scale-95 items-center justify-center gap-5 rounded-3xl border border-white/60 bg-white/65 p-6 opacity-0 shadow-[0_60px_140px_-40px_rgba(27,26,24,0.7)] backdrop-blur-xl transition-all duration-500 ease-out group-hover/shots:translate-y-0 group-hover/shots:scale-100 group-hover/shots:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:scale-100 group-focus-visible:opacity-100`}
                 style={{ width: "min(90vw, 820px)" }}
               >
                 {/* soft accent glow behind the deck */}
