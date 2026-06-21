@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import type { App } from "@/data/apps";
 import PlaceholderImage from "./PlaceholderImage";
 import StatusTag from "./StatusTag";
@@ -14,7 +15,17 @@ export default function AppCard({ app }: { app: App }) {
       className="group flex flex-col overflow-hidden rounded-xl2 border border-hairline bg-surface transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_40px_-24px_rgba(27,26,24,0.35)] focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/40"
     >
       <div className="relative aspect-[4/3] overflow-hidden border-b border-hairline">
-        <PlaceholderImage label={`${app.name} hero`} src={app.heroImage.src} />
+        {app.heroImage.real ? (
+          <Image
+            src={app.heroImage.src}
+            alt={app.heroImage.alt}
+            fill
+            sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 360px"
+            className="object-cover object-top"
+          />
+        ) : (
+          <PlaceholderImage label={`${app.name} hero`} src={app.heroImage.src} />
+        )}
       </div>
       <div className="flex flex-1 flex-col gap-2 p-5">
         <div className="flex items-center justify-between gap-3">
