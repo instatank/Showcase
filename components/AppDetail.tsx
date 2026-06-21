@@ -3,6 +3,7 @@ import type { App } from "@/data/apps";
 import Container from "./Container";
 import Reveal from "./Reveal";
 import Visual from "./Visual";
+import ZoomableVisual from "./ZoomableVisual";
 import StatusTag from "./StatusTag";
 
 /**
@@ -58,7 +59,9 @@ export default function AppDetail({ app }: { app: App }) {
         {/* hero shot in the device frame */}
         <Reveal delay={100}>
           <div className="mt-10 grid items-center gap-8 rounded-xl2 border border-hairline bg-surface p-5 sm:gap-10 sm:p-12 lg:grid-cols-2">
-            <Visual visual={app.heroImage} />
+            <ZoomableVisual visual={app.heroImage}>
+              <Visual visual={app.heroImage} />
+            </ZoomableVisual>
             <div className="space-y-8">
               {/* The itch */}
               <Field label="The itch">
@@ -100,7 +103,9 @@ export default function AppDetail({ app }: { app: App }) {
             </h2>
             <div className="mt-8 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
               {app.supportingImages.map((visual) => (
-                <Visual key={visual.src} visual={visual} />
+                <ZoomableVisual key={visual.src} visual={visual}>
+                  <Visual visual={visual} />
+                </ZoomableVisual>
               ))}
             </div>
 
