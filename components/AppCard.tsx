@@ -66,7 +66,7 @@ export default function AppCard({ app }: { app: App }) {
                 {gallery.map((visual, i) => (
                   <div
                     key={visual.src}
-                    className={`relative aspect-[9/19.5] w-1/3 scale-75 overflow-hidden rounded-2xl border border-hairline bg-surface opacity-0 shadow-2xl ring-1 ring-black/5 transition-all duration-500 ease-out ${fan[i]} ${fanDelay[i]}`}
+                    className={`relative aspect-[9/19.5] w-1/3 scale-75 overflow-hidden rounded-2xl border border-hairline bg-surface opacity-0 shadow-2xl ring-1 ring-black/5 transition-all duration-500 ease-out group-hover/shots:opacity-100 group-focus-visible:opacity-100 ${fan[i]} ${fanDelay[i]}`}
                   >
                     <Image
                       src={visual.src}
