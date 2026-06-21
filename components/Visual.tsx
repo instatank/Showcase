@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { Visual as VisualType } from "@/data/apps";
 import DeviceFrame from "./DeviceFrame";
 import PlaceholderImage from "./PlaceholderImage";
@@ -12,11 +13,11 @@ const aspectClass: Record<VisualType["aspect"], string> = {
  * Visual — the single place that decides how a screenshot is rendered.
  *
  * Phone shots are wrapped in the shared DeviceFrame; wide/square shots sit in a
- * plain rounded card. Right now every shot renders a <PlaceholderImage>.
+ * plain rounded card.
  *
- * ➜ TO SWAP IN REAL IMAGES: replace the <PlaceholderImage .../> below with
- *   <Image src={visual.src} alt={visual.alt} fill className="object-cover" />
- *   (import next/image). That one change updates the whole site.
+ * Visuals flagged `real: true` render the actual screenshot via next/image;
+ * everything else still renders a labelled <PlaceholderImage> until its real
+ * file is dropped in and the flag is set.
  */
 export default function Visual({
   visual,
@@ -25,7 +26,15 @@ export default function Visual({
   visual: VisualType;
   showCaption?: boolean;
 }) {
-  const inner = (
+  const inner = visual.real ? (
+    <Image
+      src={visual.src}
+      alt={visual.alt}
+      fill
+      sizes="(max-width: 640px) 90vw, 300px"
+      className="object-cover"
+    />
+  ) : (
     <PlaceholderImage label={visual.alt} src={visual.src} />
   );
 

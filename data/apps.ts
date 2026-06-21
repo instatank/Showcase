@@ -19,6 +19,14 @@ export type StatusTag =
 /** Aspect ratios used by the placeholder/visual system. */
 export type VisualAspect = "phone" | "wide" | "square";
 
+/**
+ * How a visitor can experience the app from its detail page.
+ * - "screenshots": images only — no live link, no demo button (e.g. a
+ *   login-gated app holding personal data).
+ * - "live-demo": render a live link / demo button (needs `liveUrl` on the App).
+ */
+export type ExperienceMode = "screenshots" | "live-demo";
+
 export interface Visual {
   /** Path where the real asset will live, e.g. /images/dayos/hero.png */
   src: string;
@@ -28,6 +36,11 @@ export interface Visual {
   caption: string;
   /** Controls the placeholder box + framing aspect ratio. */
   aspect: VisualAspect;
+  /**
+   * When true, render the real <Image> at `src` instead of the labelled
+   * placeholder block. Set this once the real file exists at `src`.
+   */
+  real?: boolean;
 }
 
 export interface App {
@@ -43,6 +56,13 @@ export interface App {
   /** PRD §6: AI stack + one interesting build decision. */
   howItWasBuilt: string;
   statusTag: StatusTag;
+  /**
+   * How the app is presented to visitors. Defaults to "screenshots" when
+   * omitted. "live-demo" renders a demo/live button (requires `liveUrl`).
+   */
+  experienceMode?: ExperienceMode;
+  /** Live/demo URL — only used when experienceMode is "live-demo". */
+  liveUrl?: string;
   /** Hero shot — rendered inside a DeviceFrame. */
   heroImage: Visual;
   /** 2–4 supporting shots. */
@@ -55,41 +75,54 @@ export const apps: App[] = [
   {
     slug: "dayos",
     name: "DayOS",
-    oneLiner: "PLACEHOLDER — Personal system to run your whole day in one place.",
+    // ⚠️ DRAFT PLACEHOLDER — one-liner to be confirmed in Ankit's own words.
+    oneLiner:
+      "An AI time-intelligence system I built for myself — and use every day.",
+    // ⚠️ DRAFT PLACEHOLDER — the itch to be replaced in Ankit's own words.
     theItch:
-      "PLACEHOLDER — Needed one place to run the day (focus, journaling, wins) instead of five scattered tools. Confirm the real story.",
+      "I wanted an honest record of where my time and attention actually go each day — without juggling a calendar, a notes app, and a separate journal. So I built one place to run the day: log it, journal it, review it.",
     features: [
-      "PLACEHOLDER — Daily focus tasks",
-      "PLACEHOLDER — Journaling",
-      "PLACEHOLDER — Wins & tracking",
+      "Logs the day as time blocks — deep work, learning, practice, leisure, leaks — alongside journaling, quick notes, project sessions, and a daily review.",
+      'Uses Claude three ways: turns a spoken or typed brain-dump into structured time blocks, tightens rough journal entries on one tap ("Organize"), and pulls a clean to-do list out of messy text.',
+      "Surfaces trends over time — how the hours split across categories and projects — with a calendar to revisit any past day.",
     ],
     howItWasBuilt:
-      "PLACEHOLDER — AI-assisted build with [stack]. Interesting decision: [one brand-relevant choice that shows the meta-skill].",
+      "Frontend: a single-file PWA in vanilla JavaScript — no framework, no build step, installable, works offline. Data: Firebase (auth, Firestore, storage for voice notes, push notifications). AI: Claude (Sonnet 4.6) via a tiny Vercel serverless proxy. Charts: Chart.js, lazy-loaded only when needed.\n\nThe build decision worth showing: the backend runs with zero installed packages. When the app calls Claude, the serverless function verifies the user's Firebase login token by hand — checking its cryptographic signature with Node's built-in crypto and Firebase's public keys — instead of pulling in the Firebase server library. Nothing to install, update, or break. Same philosophy as the app itself: as few moving parts as possible.",
     statusTag: "Daily driver",
+    // Screenshots only — login-gated, holds personal data, so no live link/demo.
+    experienceMode: "screenshots",
     heroImage: {
-      src: "/images/dayos/hero.png",
-      alt: "PLACEHOLDER — DayOS hero screenshot",
-      caption: "PLACEHOLDER — DayOS home / today view",
+      src: "/screenshots/dayos/08todaylight.png",
+      alt: "DayOS Today view — focus task, time-block logs, and captures",
+      caption:
+        "The day, laid out as time blocks — focus task, logs, and captures in one view.",
       aspect: "phone",
+      real: true,
     },
     supportingImages: [
       {
-        src: "/images/dayos/shot-1.png",
-        alt: "PLACEHOLDER — DayOS supporting screenshot 1",
-        caption: "PLACEHOLDER — Focus tasks",
+        src: "/screenshots/dayos/04trendsovertime.png",
+        alt: "DayOS Trends — categories and projects over time",
+        caption:
+          "Time intelligence: where the hours actually went, across categories and projects.",
         aspect: "phone",
+        real: true,
       },
       {
-        src: "/images/dayos/shot-2.png",
-        alt: "PLACEHOLDER — DayOS supporting screenshot 2",
-        caption: "PLACEHOLDER — Journaling",
+        src: "/screenshots/dayos/07captureorganize.png",
+        alt: "DayOS capture sheet — journaling with one-tap AI cleanup",
+        caption:
+          "Journaling with one-tap AI cleanup — messy thoughts in, structured entry out.",
         aspect: "phone",
+        real: true,
       },
       {
-        src: "/images/dayos/shot-3.png",
-        alt: "PLACEHOLDER — DayOS supporting screenshot 3",
-        caption: "PLACEHOLDER — Wins tracker",
+        src: "/screenshots/dayos/projects.png",
+        alt: "DayOS Projects — tagged, dated, searchable project sessions",
+        caption:
+          "Project sessions and learning logs — tagged, dated, searchable.",
         aspect: "phone",
+        real: true,
       },
     ],
   },

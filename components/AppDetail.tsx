@@ -34,13 +34,28 @@ export default function AppDetail({ app }: { app: App }) {
             <p className="mt-4 text-lg leading-relaxed text-muted sm:text-xl">
               {app.oneLiner}
             </p>
+            {/* Experience mode: live-demo gets a button; screenshots-only gets a quiet note. */}
+            {app.experienceMode === "live-demo" && app.liveUrl ? (
+              <a
+                href={app.liveUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="mt-5 inline-flex items-center gap-1.5 rounded-full bg-accent px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
+              >
+                Open live demo <span aria-hidden>→</span>
+              </a>
+            ) : (
+              <p className="mt-5 inline-flex items-center gap-2 rounded-full border border-hairline bg-surface px-3 py-1 text-xs font-medium uppercase tracking-wider text-muted">
+                Screenshots only
+              </p>
+            )}
           </header>
         </Reveal>
 
         {/* hero shot in the device frame */}
         <Reveal delay={100}>
           <div className="mt-10 grid items-center gap-8 rounded-xl2 border border-hairline bg-surface p-5 sm:gap-10 sm:p-12 lg:grid-cols-2">
-            <Visual visual={app.heroImage} showCaption={false} />
+            <Visual visual={app.heroImage} />
             <div className="space-y-8">
               {/* The itch */}
               <Field label="The itch">
@@ -65,7 +80,11 @@ export default function AppDetail({ app }: { app: App }) {
         <Reveal>
           <section className="mt-12 max-w-3xl">
             <Field label="How it was built">
-              <p>{app.howItWasBuilt}</p>
+              {app.howItWasBuilt.split("\n\n").map((para, i) => (
+                <p key={i} className={i > 0 ? "mt-4" : undefined}>
+                  {para}
+                </p>
+              ))}
             </Field>
           </section>
         </Reveal>
