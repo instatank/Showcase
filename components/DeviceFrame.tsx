@@ -16,9 +16,7 @@ export default function DeviceFrame({
   className?: string;
 }) {
   return (
-    // ~25% smaller than the original 300px so the detail-page screenshots sit
-    // more compactly (DeviceFrame is only used on the app detail page).
-    <div className={`mx-auto w-full max-w-[225px] ${className}`}>
+    <div className={`mx-auto w-full max-w-[300px] ${className}`}>
       <div className="relative rounded-[2.5rem] border border-hairline bg-ink p-2.5 shadow-[0_30px_60px_-20px_rgba(27,26,24,0.35)] ring-1 ring-black/5">
         {/* screen */}
         <div className="relative aspect-[9/19.5] overflow-hidden rounded-[2rem] bg-surface">
