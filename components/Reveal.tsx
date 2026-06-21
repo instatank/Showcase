@@ -47,7 +47,9 @@ export default function Reveal({
       className={className}
       style={{
         opacity: shown ? 1 : 0,
-        transform: shown ? "translateY(0)" : "translateY(12px)",
+        // Use "none" (not translateY(0)) once shown so the element stops being a
+        // stacking context — lets hover overlays in children rise above siblings.
+        transform: shown ? "none" : "translateY(12px)",
         transition: `opacity 0.6s ease-out ${delay}ms, transform 0.6s ease-out ${delay}ms`,
       }}
     >
