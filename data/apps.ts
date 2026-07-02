@@ -13,11 +13,21 @@
 export type StatusTag =
   | "Daily driver"
   | "Shipped"
+  | "Shipped · actively maintained"
   | "In progress"
   | "Prototype";
 
 /** Aspect ratios used by the placeholder/visual system. */
 export type VisualAspect = "phone" | "wide" | "square";
+
+/**
+ * How a visitor can experience the app from its detail page.
+ * - "screenshots": images only — no live link, no demo button (e.g. a
+ *   login-gated app holding personal data).
+ * - "screenshots-demo": screenshots now, demo-capable — no public URL wired yet.
+ * - "live-demo": render a live link / demo button (needs `liveUrl` on the App).
+ */
+export type ExperienceMode = "screenshots" | "screenshots-demo" | "live-demo";
 
 export interface Visual {
   /** Path where the real asset will live, e.g. /images/dayos/hero.png */
@@ -28,6 +38,11 @@ export interface Visual {
   caption: string;
   /** Controls the placeholder box + framing aspect ratio. */
   aspect: VisualAspect;
+  /**
+   * When true, render the real screenshot at `src` instead of the labelled
+   * placeholder block. Set this once the real file exists at `src`.
+   */
+  real?: boolean;
 }
 
 export interface App {
@@ -43,6 +58,13 @@ export interface App {
   /** PRD §6: AI stack + one interesting build decision. */
   howItWasBuilt: string;
   statusTag: StatusTag;
+  /**
+   * How the app is presented to visitors. Defaults to "screenshots" when
+   * omitted. "live-demo" renders a demo/live button (requires `liveUrl`).
+   */
+  experienceMode?: ExperienceMode;
+  /** Live/demo URL — only used when experienceMode is "live-demo". */
+  liveUrl?: string;
   /** Hero shot — rendered inside a DeviceFrame. */
   heroImage: Visual;
   /** 2–4 supporting shots. */
@@ -55,79 +77,134 @@ export const apps: App[] = [
   {
     slug: "dayos",
     name: "DayOS",
-    oneLiner: "PLACEHOLDER — Personal system to run your whole day in one place.",
+    // ⚠️ DRAFT PLACEHOLDER — one-liner to be confirmed in Ankit's own words.
+    oneLiner:
+      "An AI time-intelligence system I built for myself — and use every day.",
+    // ⚠️ DRAFT PLACEHOLDER — the itch to be replaced in Ankit's own words.
     theItch:
-      "PLACEHOLDER — Needed one place to run the day (focus, journaling, wins) instead of five scattered tools. Confirm the real story.",
+      "I wanted an honest record of where my time and attention actually go each day — without juggling a calendar, a notes app, and a separate journal. So I built one place to run the day: log it, journal it, review it.",
     features: [
-      "PLACEHOLDER — Daily focus tasks",
-      "PLACEHOLDER — Journaling",
-      "PLACEHOLDER — Wins & tracking",
+      "Logs the day as time blocks — deep work, learning, practice, leisure, leaks — alongside journaling, quick notes, project sessions, and a daily review.",
+      'Uses Claude three ways: turns a spoken or typed brain-dump into structured time blocks, tightens rough journal entries on one tap ("Organize"), and pulls a clean to-do list out of messy text.',
+      "Surfaces trends over time — how the hours split across categories and projects — with a calendar to revisit any past day.",
     ],
     howItWasBuilt:
-      "PLACEHOLDER — AI-assisted build with [stack]. Interesting decision: [one brand-relevant choice that shows the meta-skill].",
+      "Frontend: a single-file PWA in vanilla JavaScript — no framework, no build step, installable, works offline. Data: Firebase (auth, Firestore, storage for voice notes, push notifications). AI: Claude (Sonnet 4.6) via a tiny Vercel serverless proxy. Charts: Chart.js, lazy-loaded only when needed.\n\nThe build decision worth showing: the backend runs with zero installed packages. When the app calls Claude, the serverless function verifies the user's Firebase login token by hand — checking its cryptographic signature with Node's built-in crypto and Firebase's public keys — instead of pulling in the Firebase server library. Nothing to install, update, or break. Same philosophy as the app itself: as few moving parts as possible.",
     statusTag: "Daily driver",
+    // Screenshots only — login-gated, holds personal data, so no live link/demo.
+    experienceMode: "screenshots",
     heroImage: {
-      src: "/images/dayos/hero.png",
-      alt: "PLACEHOLDER — DayOS hero screenshot",
-      caption: "PLACEHOLDER — DayOS home / today view",
+      src: "/screenshots/dayos/08todaylight.png",
+      alt: "DayOS Today view — focus task, time-block logs, and captures",
+      caption:
+        "The day, laid out as time blocks — focus task, logs, and captures in one view.",
       aspect: "phone",
+      real: true,
     },
     supportingImages: [
       {
-        src: "/images/dayos/shot-1.png",
-        alt: "PLACEHOLDER — DayOS supporting screenshot 1",
-        caption: "PLACEHOLDER — Focus tasks",
+        src: "/screenshots/dayos/04trendsovertime.png",
+        alt: "DayOS Trends — categories and projects over time",
+        caption:
+          "Time intelligence: where the hours actually went, across categories and projects.",
         aspect: "phone",
+        real: true,
       },
       {
-        src: "/images/dayos/shot-2.png",
-        alt: "PLACEHOLDER — DayOS supporting screenshot 2",
-        caption: "PLACEHOLDER — Journaling",
+        src: "/screenshots/dayos/07captureorganize.png",
+        alt: "DayOS capture sheet — journaling with one-tap AI cleanup",
+        caption:
+          "Journaling with one-tap AI cleanup — messy thoughts in, structured entry out.",
         aspect: "phone",
+        real: true,
       },
       {
-        src: "/images/dayos/shot-3.png",
-        alt: "PLACEHOLDER — DayOS supporting screenshot 3",
-        caption: "PLACEHOLDER — Wins tracker",
+        src: "/screenshots/dayos/projects.png",
+        alt: "DayOS Projects — tagged, dated, searchable project sessions",
+        caption:
+          "Project sessions and learning logs — tagged, dated, searchable.",
         aspect: "phone",
+        real: true,
       },
     ],
   },
   {
     slug: "partyspark",
     name: "PartySpark",
-    oneLiner: "PLACEHOLDER — Social party game app that gets a room going.",
+    // ⚠️ DRAFT PLACEHOLDER — one-liner to be confirmed in Ankit's own words.
+    oneLiner: "15+ party games in one app — offline-first, AI-spiced.",
+    // ⚠️ DRAFT PLACEHOLDER — the itch to be replaced in Ankit's own words.
     theItch:
-      "PLACEHOLDER — Confirm the real itch behind PartySpark.",
+      "Getting a group laughing and engaged — at a party, on the couch, in the car — usually means hunting for a game, signing up for something, or needing a connection that isn't there. I wanted one premium-feeling app that bundles the best party games, works offline, and uses AI to keep the content fresh when you want it.",
     features: [
-      "PLACEHOLDER — Feature one",
-      "PLACEHOLDER — Feature two",
-      "PLACEHOLDER — Feature three",
+      "15+ party games in one app — trivia, word games, social-deduction, couples and crowd games — most fully playable offline, no account needed.",
+      "AI generates custom content on demand (tailored question packs, photo-based roasts), and always falls back to bundled content, so a game never breaks on a failed network call.",
+      "Flexible play modes — pass-the-phone or named players with live leaderboards — plus a frictionless gate for mature decks.",
     ],
     howItWasBuilt:
-      "PLACEHOLDER — Built with [stack]. Note: PartySpark has its own full navy/violet + black/gold identity — the SHOWCASE deliberately does not reuse it (PRD §8).",
-    statusTag: "Shipped",
+      'Frontend: React 19 + TypeScript, built with Vite 7, styled with Tailwind v4 — a premium glassmorphism design system. Backend: Vercel serverless functions that keep all API keys server-side; the app talks to a single /api/ai endpoint. AI: Claude Haiku 4.5 as the primary generator, with Google Gemini 2.5 Flash as fallback for most text, and a Gemini image model powering the "Roast Me" caricatures.\n\nThe build decision worth showing: PartySpark is offline-first, with AI as optional spice — never a hard dependency. Every AI-backed game ships with a bundled static deck, so if the AI call fails the player still gets a full game. Custom-content requests try Claude first and silently fall back to Gemini if needed — the player never sees which AI answered, or that one failed. All keys live server-side in a Vercel function, never exposed in the app people use. The result feels smart when online and simply never breaks when it isn\'t.',
+    statusTag: "Shipped · actively maintained",
+    // "Screenshots / demo" for now — no-login, no personal data, so a live "Try it"
+    // link is a candidate later. Do not hardcode a URL until one is provided.
+    experienceMode: "screenshots-demo",
     heroImage: {
-      src: "/images/partyspark/hero.png",
-      alt: "PLACEHOLDER — PartySpark hero screenshot",
-      caption: "PLACEHOLDER — PartySpark lobby",
+      src: "/screenshots/partyspark/home-grid.png",
+      alt: "PartySpark home — glass-on-navy game grid with filter pills",
+      caption:
+        "15+ games in one app, filtered by vibe — in a premium glass design system.",
       aspect: "phone",
+      real: true,
     },
     supportingImages: [
       {
-        src: "/images/partyspark/shot-1.png",
-        alt: "PLACEHOLDER — PartySpark supporting screenshot 1",
-        caption: "PLACEHOLDER — Game in progress",
+        src: "/screenshots/partyspark/roast-me.png",
+        alt: "PartySpark Roast Me — pick a sticker, drop a photo for an AI roast",
+        caption:
+          "Pick a sticker, drop a photo, and AI roasts you with a custom caricature — the signature party moment.",
         aspect: "phone",
+        real: true,
       },
       {
-        src: "/images/partyspark/shot-2.png",
-        alt: "PLACEHOLDER — PartySpark supporting screenshot 2",
-        caption: "PLACEHOLDER — Round results",
+        src: "/screenshots/partyspark/create-your-vibe.png",
+        alt: "PartySpark Most Likely To… deck picker with an AI 'Create Your Vibe' option",
+        caption:
+          "Pick a vibe — or let AI spin up a custom 'Create Your Vibe' pack — with bundled decks as fallback.",
         aspect: "phone",
+        real: true,
+      },
+      {
+        src: "/screenshots/partyspark/mlt-play.png",
+        alt: "PartySpark Most Likely To… in play — prompt card with a 3-2-1 group vote",
+        caption:
+          "…and into the round: read the prompt, then everyone points on a 3-2-1 vote.",
+        aspect: "phone",
+        real: true,
+      },
+      {
+        src: "/screenshots/partyspark/scramble.png",
+        alt: "PartySpark Scramble — solo word game with letter tiles, timer and score",
+        caption:
+          "Scramble: a clean solo word game with a live timer and end-of-round scoring.",
+        aspect: "phone",
+        real: true,
+      },
+      {
+        src: "/screenshots/partyspark/in-play-card.png",
+        alt: "PartySpark Taboo in play — word, forbidden list, timer and skip/correct",
+        caption:
+          "Taboo in play: describe the word without the forbidden five, against the clock.",
+        aspect: "phone",
+        real: true,
+      },
+      {
+        src: "/screenshots/partyspark/nhie.png",
+        alt: "PartySpark Never Have I Ever — Classic Party card with I Have / I've Never",
+        caption:
+          "Never Have I Ever: two-tap play through the Classic Party deck — one consistent design system across every game.",
+        aspect: "phone",
+        real: true,
       },
     ],
-    clipUrl: "/images/partyspark/clip.mp4", // PLACEHOLDER — 15–20s screen-recording (PRD §7 minimum)
   },
   {
     slug: "billbud",

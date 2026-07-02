@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import type { App } from "@/data/apps";
 import PlaceholderImage from "./PlaceholderImage";
 import StatusTag from "./StatusTag";
@@ -6,15 +7,108 @@ import StatusTag from "./StatusTag";
 /**
  * AppCard — one cell in the builds grid: image, name, one-liner, status tag.
  * Links to the detail page. Hover lifts the card and warms the border.
+ *
+ * `align` controls which way the hover preview expands so it never runs off
+ * the screen: left-column cards spread right, right-column cards spread left,
+ * centre cards stay symmetric. The grid passes this based on the card's column.
  */
-export default function AppCard({ app }: { app: App }) {
+export default function AppCard({
+  app,
+  align = "center",
+}: {
+  app: App;
+  align?: "left" | "center" | "right";
+}) {
+  // For apps with real screenshots, preview 3 of them as mini phones in the
+  // card; the click-through goes to the full detail page anyway.
+  const gallery = app.heroImage.real
+    ? [app.heroImage, ...app.supportingImages].slice(0, 3)
+    : null;
+
+  // Anchor + nudge the expanded panel away from the nearest screen edge.
+  const panelJustify =
+    align === "left"
+      ? "justify-start"
+      : align === "right"
+        ? "justify-end"
+        : "justify-center";
+  const panelMargin =
+    align === "left"
+      ? "ml-8 sm:ml-12"
+      : align === "right"
+        ? "mr-8 sm:mr-12"
+        : "";
+
+  // Per-shot motion for the hover "fan": outer shots spread out + tilt, the
+  // centre one lifts and scales up the most. Staggered so they cascade open.
+  const fan = [
+    "group-hover/shots:-translate-x-10 group-hover/shots:-rotate-[7deg] group-hover/shots:scale-100 group-focus-visible:-translate-x-10 group-focus-visible:-rotate-[7deg] group-focus-visible:scale-100",
+    "z-10 group-hover/shots:-translate-y-5 group-hover/shots:scale-110 group-focus-visible:-translate-y-5 group-focus-visible:scale-110",
+    "group-hover/shots:translate-x-10 group-hover/shots:rotate-[7deg] group-hover/shots:scale-100 group-focus-visible:translate-x-10 group-focus-visible:rotate-[7deg] group-focus-visible:scale-100",
+  ];
+  const fanDelay = ["delay-0", "delay-100", "delay-200"];
+
   return (
     <Link
       href={`/apps/${app.slug}`}
-      className="group flex flex-col overflow-hidden rounded-xl2 border border-hairline bg-surface transition-all duration-300 hover:-translate-y-1 hover:border-accent-edge hover:shadow-card-hover focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/60"
+      className="group relative z-0 flex flex-col overflow-visible rounded-xl2 border border-hairline bg-surface transition-all duration-300 hover:z-30 hover:-translate-y-1 hover:border-accent-edge hover:shadow-card-hover focus:outline-none focus-visible:z-30 focus-visible:ring-2 focus-visible:ring-accent/60"
     >
-      <div className="relative aspect-[4/3] overflow-hidden border-b border-hairline">
-        <PlaceholderImage label={`${app.name} hero`} src={app.heroImage.src} />
+      <div className="group/shots relative aspect-[4/3] border-b border-hairline">
+        {gallery ? (
+          <>
+            {/* Resting state: a row of mini phones. Fades + shrinks on hover. */}
+            <div className="absolute inset-0 z-10 flex items-center justify-center gap-2.5 overflow-hidden rounded-t-xl2 bg-gradient-to-br from-raised to-surface p-4 transition-all duration-300 ease-out group-hover/shots:scale-95 group-hover/shots:opacity-0 group-focus-visible:scale-95 group-focus-visible:opacity-0 sm:gap-3">
+              {gallery.map((visual) => (
+                <div
+                  key={visual.src}
+                  className="relative h-[90%] overflow-hidden rounded-lg border border-white/10 bg-surface shadow-md ring-1 ring-black/40"
+                  style={{ aspectRatio: "9 / 19.5" }}
+                >
+                  <Image
+                    src={visual.src}
+                    alt={visual.alt}
+                    fill
+                    sizes="120px"
+                    className="object-cover object-top"
+                  />
+                </div>
+              ))}
+            </div>
+            {/* Hover state: the three shots fan out into a large expanded
+                preview that floats above the rest of the page. pointer-events-none
+                so a click still navigates through to the detail page. */}
+            <div
+              className={`pointer-events-none absolute inset-0 z-40 flex items-center ${panelJustify}`}
+              aria-hidden
+            >
+              <div
+                className={`${panelMargin} flex shrink-0 translate-y-4 scale-95 items-center justify-center gap-5 rounded-3xl border border-white/10 bg-surface/80 p-6 opacity-0 shadow-[0_60px_140px_-40px_rgba(0,0,0,0.85)] backdrop-blur-xl transition-all duration-500 ease-out group-hover/shots:translate-y-0 group-hover/shots:scale-100 group-hover/shots:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:scale-100 group-focus-visible:opacity-100`}
+                style={{ width: "min(90vw, 820px)" }}
+              >
+                {/* soft ember glow behind the deck */}
+                <div className="pointer-events-none absolute inset-6 -z-10 rounded-full bg-accent/15 blur-3xl" />
+                {gallery.map((visual, i) => (
+                  <div
+                    key={visual.src}
+                    className={`relative aspect-[9/19.5] w-1/3 scale-75 overflow-hidden rounded-2xl border border-white/10 bg-surface opacity-0 shadow-2xl ring-1 ring-black/40 transition-all duration-500 ease-out group-hover/shots:opacity-100 group-focus-visible:opacity-100 ${fan[i]} ${fanDelay[i]}`}
+                  >
+                    <Image
+                      src={visual.src}
+                      alt={visual.alt}
+                      fill
+                      sizes="280px"
+                      className="object-cover object-top"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </>
+        ) : (
+          <div className="absolute inset-0 overflow-hidden rounded-t-xl2">
+            <PlaceholderImage label={`${app.name} hero`} src={app.heroImage.src} />
+          </div>
+        )}
       </div>
       <div className="flex flex-1 flex-col gap-2 p-5">
         <div className="flex items-center justify-between gap-3">

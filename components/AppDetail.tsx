@@ -3,6 +3,7 @@ import type { App } from "@/data/apps";
 import Container from "./Container";
 import Reveal from "./Reveal";
 import Visual from "./Visual";
+import ZoomableVisual from "./ZoomableVisual";
 import StatusTag from "./StatusTag";
 
 /**
@@ -34,6 +35,24 @@ export default function AppDetail({ app }: { app: App }) {
             <p className="mt-4 text-lg leading-relaxed text-muted sm:text-xl">
               {app.oneLiner}
             </p>
+            {/* Experience mode: live-demo gets a button; otherwise a quiet
+                mono note whose label reflects the mode. */}
+            {app.experienceMode === "live-demo" && app.liveUrl ? (
+              <a
+                href={app.liveUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="mt-5 inline-flex items-center gap-1.5 rounded-full bg-accent px-4 py-2 text-sm font-semibold text-paper transition-all hover:bg-accent-bright hover:shadow-accent-glow"
+              >
+                Open live demo <span aria-hidden>→</span>
+              </a>
+            ) : (
+              <p className="mt-5 inline-flex items-center gap-2 rounded-full border border-hairline bg-surface px-3 py-1.5 font-mono text-[11px] uppercase tracking-wider text-muted">
+                {app.experienceMode === "screenshots-demo"
+                  ? "screenshots / demo"
+                  : "screenshots only"}
+              </p>
+            )}
           </header>
         </Reveal>
 
@@ -45,7 +64,9 @@ export default function AppDetail({ app }: { app: App }) {
               className="pointer-events-none absolute -left-24 -top-24 h-80 w-80 rounded-full bg-accent/10 blur-3xl"
             />
             <div className="relative grid items-center gap-8 p-5 sm:gap-10 sm:p-12 lg:grid-cols-2">
-              <Visual visual={app.heroImage} showCaption={false} />
+              <ZoomableVisual visual={app.heroImage}>
+                <Visual visual={app.heroImage} showCaption={false} />
+              </ZoomableVisual>
               <div className="space-y-8">
                 {/* The itch */}
                 <Field label="The itch">
@@ -71,7 +92,11 @@ export default function AppDetail({ app }: { app: App }) {
         <Reveal>
           <section className="mt-12 max-w-3xl">
             <Field label="How it was built">
-              <p>{app.howItWasBuilt}</p>
+              {app.howItWasBuilt.split("\n\n").map((para, i) => (
+                <p key={i} className={i > 0 ? "mt-4" : undefined}>
+                  {para}
+                </p>
+              ))}
             </Field>
           </section>
         </Reveal>
@@ -84,7 +109,9 @@ export default function AppDetail({ app }: { app: App }) {
             </h2>
             <div className="mt-8 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
               {app.supportingImages.map((visual) => (
-                <Visual key={visual.src} visual={visual} />
+                <ZoomableVisual key={visual.src} visual={visual}>
+                  <Visual visual={visual} />
+                </ZoomableVisual>
               ))}
             </div>
 

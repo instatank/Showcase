@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import type { App } from "@/data/apps";
 import DeviceFrame from "./DeviceFrame";
 import PlaceholderImage from "./PlaceholderImage";
@@ -51,7 +52,17 @@ export default function FeaturedAppCard({ app }: { app: App }) {
           </Link>
         </div>
         <DeviceFrame className="max-w-[260px] lg:max-w-[280px]">
-          <PlaceholderImage label={app.heroImage.alt} src={app.heroImage.src} />
+          {app.heroImage.real ? (
+            <Image
+              src={app.heroImage.src}
+              alt={app.heroImage.alt}
+              fill
+              sizes="280px"
+              className="object-cover"
+            />
+          ) : (
+            <PlaceholderImage label={app.heroImage.alt} src={app.heroImage.src} />
+          )}
         </DeviceFrame>
       </div>
     </div>
