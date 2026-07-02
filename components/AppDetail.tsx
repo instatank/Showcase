@@ -16,17 +16,17 @@ export default function AppDetail({ app }: { app: App }) {
       <Container>
         {/* back link */}
         <Link
-          href="/#apps"
-          className="inline-flex items-center gap-1.5 text-sm text-muted transition-colors hover:text-ink"
+          href="/#builds"
+          className="inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-wider text-muted transition-colors hover:text-ink"
         >
-          <span aria-hidden>←</span> All apps
+          <span aria-hidden>←</span> all builds
         </Link>
 
         {/* header: name + one-liner + status */}
         <Reveal>
           <header className="mt-8 max-w-2xl">
             <div className="flex flex-wrap items-center gap-3 sm:gap-4">
-              <h1 className="text-3xl font-semibold tracking-tight text-ink sm:text-5xl">
+              <h1 className="font-display text-3xl font-semibold tracking-tight text-ink sm:text-5xl">
                 {app.name}
               </h1>
               <StatusTag status={app.statusTag} />
@@ -39,24 +39,30 @@ export default function AppDetail({ app }: { app: App }) {
 
         {/* hero shot in the device frame */}
         <Reveal delay={100}>
-          <div className="mt-10 grid items-center gap-8 rounded-xl2 border border-hairline bg-surface p-5 sm:gap-10 sm:p-12 lg:grid-cols-2">
-            <Visual visual={app.heroImage} showCaption={false} />
-            <div className="space-y-8">
-              {/* The itch */}
-              <Field label="The itch">
-                <p>{app.theItch}</p>
-              </Field>
-              {/* What it does — exactly 3 bullets */}
-              <Field label="What it does">
-                <ul className="space-y-2">
-                  {app.features.map((feature) => (
-                    <li key={feature} className="flex gap-3">
-                      <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-accent" />
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-              </Field>
+          <div className="relative mt-10 overflow-hidden rounded-xl2 border border-hairline bg-surface">
+            <div
+              aria-hidden
+              className="pointer-events-none absolute -left-24 -top-24 h-80 w-80 rounded-full bg-accent/10 blur-3xl"
+            />
+            <div className="relative grid items-center gap-8 p-5 sm:gap-10 sm:p-12 lg:grid-cols-2">
+              <Visual visual={app.heroImage} showCaption={false} />
+              <div className="space-y-8">
+                {/* The itch */}
+                <Field label="The itch">
+                  <p>{app.theItch}</p>
+                </Field>
+                {/* What it does — exactly 3 bullets */}
+                <Field label="What it does">
+                  <ul className="space-y-2">
+                    {app.features.map((feature) => (
+                      <li key={feature} className="flex gap-3">
+                        <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-accent" />
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </Field>
+              </div>
             </div>
           </div>
         </Reveal>
@@ -73,7 +79,7 @@ export default function AppDetail({ app }: { app: App }) {
         {/* Visual set: supporting shots + optional clip */}
         <Reveal>
           <section className="mt-16">
-            <h2 className="text-sm font-medium uppercase tracking-[0.18em] text-accent">
+            <h2 className="font-mono text-xs font-medium uppercase tracking-[0.22em] text-accent">
               Visual set
             </h2>
             <div className="mt-8 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
@@ -84,15 +90,15 @@ export default function AppDetail({ app }: { app: App }) {
 
             {app.clipUrl && (
               <div className="mt-12">
-                <div className="flex aspect-video w-full max-w-3xl items-center justify-center rounded-xl2 border border-hairline bg-stone-100 text-center">
+                <div className="flex aspect-video w-full max-w-3xl items-center justify-center rounded-xl2 border border-hairline bg-surface text-center">
                   <div className="flex flex-col items-center gap-2 p-6">
-                    <span className="rounded-full bg-ink/5 px-2.5 py-1 text-[10px] font-medium uppercase tracking-wider text-muted">
+                    <span className="rounded-full border border-hairline bg-paper/60 px-2.5 py-1 font-mono text-[10px] font-medium uppercase tracking-wider text-muted">
                       Placeholder clip
                     </span>
-                    <span className="text-sm font-medium text-ink/70">
+                    <span className="text-sm font-medium text-ink/60">
                       15–20s screen-recording
                     </span>
-                    <code className="text-[11px] text-muted/80">
+                    <code className="font-mono text-[11px] text-muted/70">
                       {app.clipUrl}
                     </code>
                   </div>
@@ -116,7 +122,7 @@ function Field({
 }) {
   return (
     <div>
-      <h2 className="text-sm font-medium uppercase tracking-[0.18em] text-accent">
+      <h2 className="font-mono text-xs font-medium uppercase tracking-[0.22em] text-accent">
         {label}
       </h2>
       <div className="mt-3 text-lg leading-relaxed text-ink/80">{children}</div>

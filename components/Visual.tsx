@@ -41,7 +41,7 @@ export default function Visual({
         </div>
       )}
       {showCaption && (
-        <figcaption className="mt-3 text-center text-sm text-muted">
+        <figcaption className="mt-3 text-center font-mono text-xs text-muted">
           {visual.caption}
         </figcaption>
       )}

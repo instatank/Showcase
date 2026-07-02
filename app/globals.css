@@ -7,14 +7,49 @@
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    color-scheme: dark;
   }
 
   body {
     @apply bg-paper text-ink antialiased;
+    /* one restrained warm glow at the very top of the page */
+    background-image: radial-gradient(
+      ellipse 70% 36% at 50% -12%,
+      rgba(255, 106, 60, 0.09),
+      transparent 70%
+    );
+    background-repeat: no-repeat;
   }
 
   ::selection {
-    @apply bg-accent-soft text-accent;
+    background: rgba(255, 106, 60, 0.28);
+    color: #fff5f0;
+  }
+}
+
+@layer utilities {
+  /* faint blueprint grid used behind the hero */
+  .bg-grid {
+    background-image: linear-gradient(
+        to right,
+        rgba(240, 239, 236, 0.035) 1px,
+        transparent 1px
+      ),
+      linear-gradient(to bottom, rgba(240, 239, 236, 0.035) 1px, transparent 1px);
+    background-size: 44px 44px;
+  }
+
+  /* fades the grid out toward the bottom so sections below sit on clean black */
+  .fade-mask-b {
+    -webkit-mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
+  }
+
+  .text-gradient-ember {
+    background: linear-gradient(100deg, #ffc2a8 0%, #ff8a61 45%, #ff6a3c 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
 }
 

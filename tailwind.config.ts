@@ -1,9 +1,12 @@
 import type { Config } from "tailwindcss";
 
 /**
- * Site visual identity (PRD §8): clean, light, restrained, Apple-inspired.
- * Warm "paper + ink" neutral palette with a single calm clay accent.
- * Deliberately NOT PartySpark's navy/violet, and NOT a Liquid-Glass theme.
+ * Site visual identity — dark, high-tech, restrained.
+ *
+ * Near-black canvas + warm "ember" accent (an evolution of the original clay,
+ * tuned for dark backgrounds). ONE accent color used sparingly; monospace
+ * details carry the "technical" signal. Deliberately avoids the generic
+ * purple-gradient/neon-glass "AI site" look.
  */
 const config: Config = {
   content: [
@@ -14,27 +17,34 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        paper: "#faf9f7", // warm off-white page background
-        surface: "#ffffff", // cards / framed content
-        ink: "#1b1a18", // primary text
-        muted: "#6b6963", // secondary text
-        hairline: "#e7e4df", // subtle borders
+        paper: "#0b0b0d", // page background (near-black, slightly warm)
+        surface: "#131316", // cards / framed content
+        raised: "#1a1a1f", // elevated hovers / inner chips
+        ink: "#f0efec", // primary text (warm off-white)
+        muted: "#8f8d86", // secondary text
+        hairline: "#232327", // subtle borders
         accent: {
-          DEFAULT: "#b5532b", // restrained clay accent, used sparingly
-          soft: "#f4e9e2",
+          DEFAULT: "#ff6a3c", // ember — the single accent
+          bright: "#ff8a61",
+          soft: "rgba(255, 106, 60, 0.10)",
+          edge: "rgba(255, 106, 60, 0.35)",
         },
       },
       fontFamily: {
-        sans: [
-          "Inter",
+        sans: ["var(--font-sans)", "ui-sans-serif", "system-ui", "sans-serif"],
+        display: [
+          "var(--font-display)",
+          "var(--font-sans)",
           "ui-sans-serif",
           "system-ui",
-          "-apple-system",
-          "BlinkMacSystemFont",
-          "Segoe UI",
-          "Helvetica Neue",
-          "Arial",
           "sans-serif",
+        ],
+        mono: [
+          "var(--font-mono)",
+          "ui-monospace",
+          "SFMono-Regular",
+          "Menlo",
+          "monospace",
         ],
       },
       maxWidth: {
@@ -43,14 +53,28 @@ const config: Config = {
       borderRadius: {
         xl2: "1.25rem",
       },
+      boxShadow: {
+        "card-hover": "0 24px 48px -24px rgba(0, 0, 0, 0.7)",
+        "accent-glow": "0 0 40px -8px rgba(255, 106, 60, 0.35)",
+      },
       keyframes: {
         "fade-up": {
           "0%": { opacity: "0", transform: "translateY(12px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
+        blink: {
+          "0%, 49%": { opacity: "1" },
+          "50%, 100%": { opacity: "0" },
+        },
+        "pulse-dot": {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0.35" },
+        },
       },
       animation: {
         "fade-up": "fade-up 0.6s ease-out both",
+        blink: "blink 1.1s step-end infinite",
+        "pulse-dot": "pulse-dot 2s ease-in-out infinite",
       },
     },
   },
