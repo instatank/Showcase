@@ -10,6 +10,15 @@ import PlaceholderImage from "@/components/PlaceholderImage";
 export default function HomePage() {
   return (
     <>
+      {/* Entry to the immersive experiments — quiet, but findable */}
+      <Link
+        href="/lab"
+        className="fixed bottom-5 right-5 z-40 flex items-center gap-2 rounded-full border border-ink/20 bg-ink px-4 py-2.5 text-xs font-medium tracking-wide text-paper shadow-lg transition-transform hover:-translate-y-0.5"
+      >
+        <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-amber-300" />
+        The Lab — 3 immersive experiments
+      </Link>
+
       {/* 1 — HERO (PRD §5.1): name, photo, one-line positioning, the hook */}
       <section className="relative overflow-hidden">
         <Container className="grid items-center gap-10 py-14 sm:py-24 lg:grid-cols-[1.2fr_1fr]">

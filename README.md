@@ -8,6 +8,26 @@ products, with six apps as the evidence. Built per
 polish and real content/assets come in Phase 3–4. All copy and images are
 clearly marked `PLACEHOLDER`.
 
+## The Lab — immersive experiments (`/lab`)
+
+Three candidate immersive presentations of the same showcase content, built to
+compare directions (the same way UoT's geometry sandbox compared session maps).
+All three read from the same `data/` source; only the world changes:
+
+- **`/lab/deal` — The Deal.** A noir card room. The story arrives as a dealer's
+  monologue, the six apps are dealt as one hand (AA — pocket aces), each card
+  flips and opens its dossier, and contact is the river card. DOM/CSS-3D.
+- **`/lab/city` — The Strip.** A neon night street walked by scrolling. Every
+  building is a shipped app (hand-rolled Canvas 3D on rails); the street ends
+  at an unbuilt wireframe lot and the gaze lifts to the sky — the contact beat.
+- **`/lab/orbit` — The Orbit.** Free-flight through the builder's system: the
+  story is the sun, apps are worlds with procedural "weather", gravity captures
+  you into orbit, a gold gate is the contact channel. Descended from UoT's
+  Voyage engine. Zero new dependencies anywhere.
+
+The classic site is untouched at `/` — the Lab is reachable from a pill on the
+homepage. Pick a direction; that door gets deepened.
+
 ## Stack
 
 Next.js (App Router) · TypeScript · Tailwind CSS · deployable to Vercel.
