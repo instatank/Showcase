@@ -11,17 +11,17 @@ export default function LabPage() {
     <div className="lab-home">
       <header className="lab-home-head">
         <p className="lab-eyebrow">ankit anand · the lab</p>
-        <h1>Three ways into the same story.</h1>
+        <h1>Four ways into the same story.</h1>
         <p>
           Six shipped apps. One arc — poker player to AI builder. Below are
-          three immersive experiments that present it: a card table, a night
-          street, a planetary system. Same content in all three; only the
-          world changes.
+          four immersive experiments that present it: a card table, a night
+          street, a planetary system, a temple garden. Same content in all
+          four; only the world changes.
         </p>
         <p className="whisper">Walk each door. Notice which one you don&rsquo;t want to leave.</p>
       </header>
 
-      <nav className="doors" aria-label="The three experiments">
+      <nav className="doors" aria-label="The four experiments">
         <Link href="/lab/deal" className="door" style={{ "--door-glow": "#3ddc97" } as CSSProperties}>
           <div className="door-viz viz-deal" aria-hidden>
             <div className="mini-card">
@@ -86,6 +86,36 @@ export default function LabPage() {
             </p>
             <span className="door-enter">
               begin the flight <span>→</span>
+            </span>
+          </div>
+        </Link>
+
+        <Link href="/lab/garden" className="door" style={{ "--door-glow": "#f2a9bc" } as CSSProperties}>
+          <div className="door-viz viz-garden" aria-hidden>
+            <div className="g-sun" />
+            <div className="torii">
+              <i className="kasa-cap" />
+              <i className="kasagi" />
+              <i className="nuki" />
+              <i className="p1" />
+              <i className="p2" />
+            </div>
+            <span className="petal" style={{ left: "22%", top: "-6%", animationDelay: "0s" }} />
+            <span className="petal" style={{ left: "56%", top: "-10%", animationDelay: "2.1s" }} />
+            <span className="petal" style={{ left: "78%", top: "-4%", animationDelay: "3.9s" }} />
+            <span className="petal" style={{ left: "38%", top: "-12%", animationDelay: "5.2s" }} />
+          </div>
+          <div className="door-copy">
+            <span className="door-num">EXPERIMENT 04</span>
+            <h2>The Garden</h2>
+            <p className="door-log">
+              A Japanese temple garden at dusk. Walk a winding stone path past
+              six places — a lantern, a hanami tree, a koi pond, a tea house —
+              and ring the temple bell at the end. One garden, two skins:
+              painterly-real and anime, swappable live.
+            </p>
+            <span className="door-enter">
+              enter through the torii <span>→</span>
             </span>
           </div>
         </Link>

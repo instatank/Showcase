@@ -24,6 +24,12 @@ All three read from the same `data/` source; only the world changes:
   story is the sun, apps are worlds with procedural "weather", gravity captures
   you into orbit, a gold gate is the contact channel. Descended from UoT's
   Voyage engine. Zero new dependencies anywhere.
+- **`/lab/garden` — The Garden.** A Japanese temple garden at dusk — the
+  Strip's scroll-walk plus the Orbit's opening-up places. A winding
+  stepping-stone path through six stations, each a different kind of place
+  (stone lantern, hanami tree, koi pond, shishi-odoshi, tea house, zen
+  garden), ending at a temple where contact = ringing the bell. One world,
+  two live-swappable render styles: painterly-real and anime.
 
 The classic site is untouched at `/` — the Lab is reachable from a pill on the
 homepage. Pick a direction; that door gets deepened.
