@@ -92,7 +92,7 @@ export default function AppDetail({ app }: { app: App }) {
                     <span className="text-sm font-medium text-ink/70">
                       15–20s screen-recording
                     </span>
-                    <code className="text-[11px] text-muted/80">
+                    <code className="text-[11px] text-muted">
                       {app.clipUrl}
                     </code>
                   </div>

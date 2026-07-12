@@ -25,7 +25,7 @@ export default function PlaceholderImage({
         Placeholder
       </span>
       <span className="text-sm font-medium text-ink/70">{label}</span>
-      <code className="max-w-full truncate text-[11px] text-muted/80">{src}</code>
+      <code className="max-w-full truncate text-[11px] text-muted">{src}</code>
     </div>
   );
 }

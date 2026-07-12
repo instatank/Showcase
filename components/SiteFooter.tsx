@@ -9,7 +9,7 @@ export default function SiteFooter() {
         <p>
           © {new Date().getFullYear()} {site.name}
         </p>
-        <p className="text-xs uppercase tracking-wider text-muted/70">
+        <p className="text-xs uppercase tracking-wider text-muted">
           PLACEHOLDER — built with Next.js · scaffold v1
         </p>
       </Container>

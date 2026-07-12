@@ -22,6 +22,7 @@ const config: Config = {
         accent: {
           DEFAULT: "#b5532b", // restrained clay accent, used sparingly
           soft: "#f4e9e2",
+          deep: "#9c4823", // darker clay for small text on accent-soft (WCAG AA)
         },
       },
       fontFamily: {

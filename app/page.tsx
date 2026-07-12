@@ -159,7 +159,7 @@ export default function HomePage() {
                     </a>
                   )}
                 </div>
-                <p className="text-xs text-muted/70">{site.contact.email}</p>
+                <p className="text-xs text-muted">{site.contact.email}</p>
               </div>
             </div>
           </Reveal>

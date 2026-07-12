@@ -1,7 +1,7 @@
 import type { StatusTag as StatusTagType } from "@/data/apps";
 
 const styles: Record<StatusTagType, string> = {
-  "Daily driver": "bg-accent-soft text-accent",
+  "Daily driver": "bg-accent-soft text-accent-deep",
   Shipped: "bg-emerald-50 text-emerald-700",
   "In progress": "bg-amber-50 text-amber-700",
   Prototype: "bg-stone-100 text-stone-600",
