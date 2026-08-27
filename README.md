@@ -13,6 +13,15 @@ clearly marked `PLACEHOLDER`.
 Next.js (App Router) · TypeScript · Tailwind CSS · deployable to Vercel.
 Fully static — no CMS, auth, or database.
 
+## Working environment (read before giving instructions)
+
+This repo is built entirely in Claude Code cloud sessions — there is no local checkout, no local terminal, and no local dev environment for the user. **Never hand them `cd` / `git clone` / `npm install` / `./script.sh` steps to run on their machine** — anything that must execute (including the "Run it locally" commands below) runs in the agent's own container, or in the deployed app.
+
+- **Egress is allowlisted.** A host can fail with "Host not in allowlist" — that means blocked, not down. Say so and propose another route.
+- **No secrets store here** (Anthropic's own docs say not to put API keys in Claude Code cloud env vars). Secrets live in Vercel's env vars — never ask the user to paste one into chat or a local file.
+- **Blocked host or needs real credentials?** Build it as a route in the deployed app and hand over a URL to open — not a script to run.
+- **Steps the user performs are browser/dashboard steps** — name the site, the menu, the button.
+
 ## Run it locally
 
 ```bash
